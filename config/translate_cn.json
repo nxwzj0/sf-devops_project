@@ -1,0 +1,15 @@
+{
+  "Billing Address": "账单地址",
+  "Shipping Address": "发货地址",
+  "State": "省份",
+  "City": "城市",
+  "Street": "街道",
+  "Zip Code": "邮政编码",
+  "Country": "国家",
+  "Phone": "联系电话",
+  "Fax": "传真",
+  "Account": "客户账户",
+  "Contact": "联系人",
+  "Opportunity": "商机",
+  "Case": "服务工单"
+}

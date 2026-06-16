@@ -1,0 +1,5 @@
+{
+  "remove_fields": ["State", "Country"],
+  "add_fields": ["Province__c", "City__c", "District__c"],
+  "cn_address_validation": "CN_Standard_Address_Rule"
+}

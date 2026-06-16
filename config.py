@@ -1,0 +1,5 @@
+SOURCE_ORG = "global-tp"
+TARGET_ORG = "aliyun-tp"
+RETRIEVE_GLOBAL = "./retrieve/global"
+RETRIEVE_ALIYUN = "./retrieve/aliyun"
+DEPLOY_DIR = "./deploy"

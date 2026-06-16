@@ -1,0 +1,7 @@
+{
+  "rollback_add_items": [
+    "retrieve/src\\objects\\Certification__c\\Certification__c.object-meta.xml",
+    "retrieve/src\\objects\\Certification__c\\listViews\\All.listView-meta.xml"
+  ],
+  "timestamp": "2026-06-16 10:08:47"
+}
