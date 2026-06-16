@@ -7,8 +7,15 @@ import os
 import shutil
 import stat
 import json
+import importlib
+import sf_utils
+# 开发期间强制热重载依赖模块，防止改了 utils 不生效
+importlib.reload(sf_utils)
 from sf_utils import get_org_info, login_org, logout_org, clean_ansi_escape,norm_sf_path
 import xml.etree.ElementTree as ET
+import importlib
+
+
 
 # 回滚缓存文件路径
 ROLLBACK_CACHE_FILE = ".rollback_cache.json"
@@ -354,19 +361,30 @@ def exec_with_scroll_log(cmd, log_panel_height=320, parse_json=False, action_nam
     if use_json_render and "--json" in cmd:
         try:
             json_data = json.loads(clean_log)
-            # 分支1：org列表
+            # 分支1：org列表，兼容 other + nonScratchOrgs 并去重
             if "other" in json_data.get("result", {}):
-                org_list = json_data["result"]["other"]
-                display_rows = []
+                res_data = json_data.get("result", {})
+                org_list = []
+                org_list.extend(res_data.get("other", []))
+                org_list.extend(res_data.get("nonScratchOrgs", []))
+
+                # 基于 orgId 去重，避免表格重复
+                seen_ids = set()
+                unique_display_rows = []
                 for org in org_list:
-                    display_rows.append({
-                        "Alias": org.get("alias", ""),
-                        "Username": org.get("username", ""),
-                        "Org Id": org.get("orgId", ""),
-                        "Status": org.get("connectedStatus", "")
-                    })
+                    org_id = org.get("orgId", "")
+                    if org_id and org_id not in seen_ids:
+                        seen_ids.add(org_id)
+                        unique_display_rows.append({
+                            "Alias": org.get("alias", ""),
+                            "Username": org.get("username", ""),
+                            "Org Id": org.get("orgId", ""),
+                            "Status": org.get("connectedStatus", "")
+                        })
+
                 st.markdown(f"**📄 {t('log_expander')}**")
-                st.dataframe(display_rows, width="stretch", height=log_panel_height)            # 分支2：retrieve拉取命令，格式化折叠展示JSON
+                st.dataframe(unique_display_rows, width="stretch", height=log_panel_height)
+            # 分支2：retrieve拉取命令，格式化折叠展示JSON
             elif "retrieve start" in cmd:
                 st.markdown(f"**📄 {t('log_expander')}**")
                 with st.expander(t("view_raw_json_log")):
