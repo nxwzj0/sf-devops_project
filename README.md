@@ -106,12 +106,14 @@ streamlit run app.py
 局域网共享访问：http://192.168.x.x:8501
 
 3. 标准运维操作规范（推荐执行顺序）
-Environment Status：登录源 Org、目标 Org，确认双连接正常
-Retrieve Metadata：拉取两边完整元数据，生成本地缓存
-Difference Compare：自动计算变更，生成回滚缓存
-Deployment Preview：预检部署，提前排查报错
-Official Deploy：校验无误后执行正式发布
-Rollback（异常故障场景）：一键执行销毁新增组件 + 恢复原始配置
+```txt
+   Environment Status：登录源 Org、目标 Org，确认双连接正常
+   Retrieve Metadata：拉取两边完整元数据，生成本地缓存
+   Difference Compare：自动计算变更，生成回滚缓存
+   Deployment Preview：预检部署，提前排查报错
+   Official Deploy：校验无误后执行正式发布
+   Rollback（异常故障场景）：一键执行销毁新增组件 + 恢复原始配置
+```
 
 ### 国际化扩展说明
 所有展示文案统一存放在 config/language_pack.json，分为 en / cn 两套键值对；
